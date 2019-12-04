@@ -25,7 +25,7 @@ class SplashRoute extends StatelessWidget {
   void checkLoginStatus(BuildContext context) async {
     LoginInfo info = await UserManager.getInstance().getLocalUserInfo();
     if (info == null) {
-      NavigatorUtils.getInstance().toLogin(context);
+      NavigatorUtils.getInstance().toMain(context);
     } else {
       NavigatorUtils.getInstance().toMain(context);
     }
