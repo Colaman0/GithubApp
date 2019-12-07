@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:github/route/main/MainPage.dart';
 import 'package:github/view/bind/BindViewPager.dart';
+import 'package:github/view/main/MainContentsWidget.dart';
 import 'package:github/view/widget/BaseWidget.dart';
 import 'package:github/view/widget/TextView.dart';
 import 'package:rxdart/rxdart.dart';
@@ -15,8 +17,7 @@ class _MainRouteState extends State<MainRoute> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       body: Container(
           child: StreamPageView(
         PageView(
@@ -25,7 +26,7 @@ class _MainRouteState extends State<MainRoute> {
           scrollDirection: Axis.horizontal,
           onPageChanged: (page)=>_pageStream.add(page),
           children: <Widget>[
-            Layout().size(width: 200, height: 200).backgroundColor(Colors.blue),
+            MainContentsWidget(),
             Layout().size(width: 200, height: 200).backgroundColor(Colors.cyan),
             Layout().size(width: 200, height: 200).backgroundColor(Colors.black26),
           ],
@@ -59,6 +60,6 @@ class _MainRouteState extends State<MainRoute> {
           );
         },
       ),
-    ));
+    );
   }
 }

@@ -164,7 +164,6 @@ class _LoginTokenWidgetState extends State<LoginTokenWidget> with AutomaticKeepA
   bool get wantKeepAlive => true;
 }
 
-
 /// 密码登录
 class LoginPswWidget extends StatefulWidget {
   @override
@@ -239,9 +238,11 @@ class _LoginPswWidgetState extends State<LoginPswWidget> with AutomaticKeepAlive
                   .backgroundColor(
                     snapshot.data ? Colors.blue : Colors.grey,
                   )
-                  .click(snapshot.data ? () {
-                    DialogManager.getInstance().showLoadingDialog(context);
-              } : null);
+                  .click(snapshot.data
+                      ? () {
+                          DialogManager.getInstance().showLoadingDialog(context);
+                        }
+                      : null);
             },
           ),
           Spacer(),
@@ -271,6 +272,5 @@ class _LoginPswWidgetState extends State<LoginPswWidget> with AutomaticKeepAlive
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }

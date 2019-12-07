@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:github/view/widget/TextView.dart';
+import 'package:github/view/main/MainContentsWidget.dart';
 
 /// 首页homepage
 class MainPage extends StatefulWidget {
@@ -11,7 +11,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: TextView("main"),
+      child: MainContentsWidget(),
     );
   }
 }

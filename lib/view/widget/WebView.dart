@@ -43,7 +43,6 @@ class _CustomWebViewState extends State<CustomWebView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     webView = getWeb();
     flutterWebviewPlugin.onScrollYChanged.listen((data) {

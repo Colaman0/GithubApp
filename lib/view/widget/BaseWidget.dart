@@ -46,8 +46,7 @@ abstract class BaseWidget extends StatelessWidget {
     if (width == null && height == null) {
       _body = _body = Container(
         padding: _padding?.getParams() ?? _defalut,
-        alignment:Alignment.center ,
-
+        alignment: Alignment.center,
         //卡片大小
         child: getChild(),
       );
@@ -55,16 +54,14 @@ abstract class BaseWidget extends StatelessWidget {
       _body = _body = Container(
         padding: _padding?.getParams() ?? _defalut,
         height: DP.get(_height.toInt()),
-        alignment:Alignment.center ,
-
+        alignment: Alignment.center,
         child: getChild(),
       );
     } else if (width != null && height == null) {
       _body = _body = Container(
         padding: _padding?.getParams() ?? _defalut,
         width: DP.get(_width.toInt()),
-        alignment:Alignment.center ,
-
+        alignment: Alignment.center,
         child: getChild(),
       );
     } else {
@@ -129,10 +126,10 @@ abstract class BaseWidget extends StatelessWidget {
 
   BaseWidget size({int width, int height}) {
     if (width != null) {
-      _width = DP.get(width);
+      _width = width.toDouble();
     }
     if (height != null) {
-      _height = DP.get(height);
+      _height = height.toDouble();
     }
     return this;
   }
@@ -160,7 +157,7 @@ abstract class BaseWidget extends StatelessWidget {
   BoxDecoration getBoxDecoration() {
     if (_boxDecoration == null) {
       _boxDecoration = BoxDecoration(
-          color: _color,
+          color: _color??Colors.white,
           borderRadius: getRadius(),
           shape: _circleShpae ? BoxShape.circle : BoxShape.rectangle,
           border: (_storkeWidth == 0 || _storkeColor == null) ? null : Border.all(color: _storkeColor, width: _storkeWidth));

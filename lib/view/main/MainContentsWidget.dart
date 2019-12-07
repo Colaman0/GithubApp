@@ -1,19 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:github/view/main/WBPicture.dart';
+import 'package:github/view/main/WBText.dart';
+import 'package:github/view/widget/BaseWidget.dart';
+import 'package:github/view/widget/PreviewPhotoView.dart';
+import 'package:github/view/widget/RefreshLoadMoreListView.dart';
+import 'package:github/view/widget/TextView.dart';
+
+import 'WBTitleWidget.dart';
 
 class MainContentsWidget extends StatefulWidget {
   @override
   _MainContentsWidgetState createState() => _MainContentsWidgetState();
 }
 
-class _MainContentsWidgetState extends State<MainContentsWidget> {
+class _MainContentsWidgetState extends State<MainContentsWidget> with AutomaticKeepAliveClientMixin {
+  WBDataFactory _wbDataFactory;
+
+  @override
+  void initState() {
+    super.initState();
+    _wbDataFactory = WBDataFactory();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () => refresh(),
-      child: ListView.builder(itemBuilder: (BuildContext context, int index) {
-        return getWBItemWidget(context,index);
-      }),
-    );
+    super.build(context); //必须添加
+    return RefreshLoadmoreListView(_wbDataFactory, RefreshLoadmoreOption());
   }
 
   refresh() async {
@@ -21,5 +33,55 @@ class _MainContentsWidgetState extends State<MainContentsWidget> {
   }
 
   Widget getWBItemWidget(BuildContext context, int index) {}
-  
+
+  @override
+  bool get wantKeepAlive => true;
+}
+
+class WBDataFactory extends RLDataFactory {
+  String TEST_CONTENT =
+      "dadfasfadadfasfadadfasfadadfasfadadfasfadadfasfadadfasfadadfasfadadfasfadadfasfadadfasfadadfasfa"
+      "dadfasfadadfasfadadfasfadadfasfadadfasfadadfasfadadfasfadadfasfadadfasfadadfasfadadfasfadadfasfa";
+
+  @override
+  Future<PageDTO> createFuture(int page) {
+    return Future.delayed(Duration(seconds: 3), () => TestDTO());
+  }
+
+  @override
+  Widget createItemWidget(BuildContext context, int index, data) {
+    return Layout(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          WBTitle(WBTitleOption(
+              avatar: "https://wx3.sinaimg.cn/mw690/4c033d1egy1g9lzuvqnzsj22c02c0u0z.jpg",
+              name: "张三",
+              secondTitle: "time")),
+          Layout(
+            child: WBText(content: TEST_CONTENT),
+          ).margin(top: 16, bottom: 16),
+          PreviewPhotosView(
+            pics: const [
+              "https://wx3.sinaimg.cn/mw690/98f0f55fly1g9o3xdj8kxj20u011e7bi.jpg",
+              "https://wx3.sinaimg.cn/mw690/98f0f55fly1g9o3xdj8kxj20u011e7bi.jpg",
+            ],
+            heroTag: index.toString(),
+          ),
+        ],
+      ),
+    ).padding(both: 24);
+  }
+}
+
+class TestDTO extends PageDTO {
+  @override
+  List getDatas() {
+    return const ["1"];
+  }
+
+  @override
+  bool isLastPage() {
+    return false;
+  }
 }
