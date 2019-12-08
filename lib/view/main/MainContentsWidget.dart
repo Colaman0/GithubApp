@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:github/view/main/WBPicture.dart';
 import 'package:github/view/main/WBText.dart';
 import 'package:github/view/widget/BaseWidget.dart';
 import 'package:github/view/widget/PreviewPhotoView.dart';
 import 'package:github/view/widget/RefreshLoadMoreListView.dart';
-import 'package:github/view/widget/TextView.dart';
 
 import 'WBTitleWidget.dart';
 
@@ -63,6 +61,7 @@ class WBDataFactory extends RLDataFactory {
           ).margin(top: 16, bottom: 16),
           PreviewPhotosView(
             pics: const [
+              "https://wx3.sinaimg.cn/mw690/98f0f55fly1g9o3xdj8kxj20u011e7bi.jpg",
               "https://wx3.sinaimg.cn/mw690/98f0f55fly1g9o3xdj8kxj20u011e7bi.jpg",
               "https://wx3.sinaimg.cn/mw690/98f0f55fly1g9o3xdj8kxj20u011e7bi.jpg",
             ],

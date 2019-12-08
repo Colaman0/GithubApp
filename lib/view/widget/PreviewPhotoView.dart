@@ -15,7 +15,8 @@ class PreviewPhotosView extends StatefulWidget {
   const PreviewPhotosView({Key key, this.pics, this.heroTag}) : super(key: key);
 
   @override
-  _PreviewPhotosViewState createState() => _PreviewPhotosViewState(this.pics, this.heroTag);
+  _PreviewPhotosViewState createState() =>
+      _PreviewPhotosViewState(this.pics, this.heroTag);
 }
 
 class _PreviewPhotosViewState extends State<PreviewPhotosView> {
@@ -28,26 +29,23 @@ class _PreviewPhotosViewState extends State<PreviewPhotosView> {
   Widget build(BuildContext context) {
     switch (pics.length) {
       case 1:
-        return LayoutBuilder(
-          builder: (context, box) {
-            var maxWidth = box.maxWidth < 64 ? box.maxWidth : DP.get(248);
-            return Hero(
+        var tag = "$heroTag-0";
 
-              tag: "$heroTag-0",
-              child: GestureDetector(
-                onTap: () => Navigator.of(context)
-                    .push(FadeRoute(page: PicturePreview(tag: heroTag, selectIndex: 0, pics: pics))),
+        return Hero(
+            tag: tag,
+            child: LayoutBuilder(builder: (context, box) {
+              return GestureDetector(
+                onTap: () => Navigator.of(context).push(FadeRoute(
+                    page: PicWidget(
+                  tag: tag,
+                  source: pics[0],
+                ))),
                 child: Container(
                   alignment: Alignment.topLeft,
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: maxWidth, maxHeight: maxWidth * 1.5),
-                    child: picStrToImage(pics[0]),
-                  ),
+                  child: picStrToImage(pics[0]),
                 ),
-              ),
-            );
-          },
-        );
+              );
+            }));
         break;
       default:
         return GridView.builder(
@@ -64,16 +62,20 @@ class _PreviewPhotosViewState extends State<PreviewPhotosView> {
               return Hero(
                 tag: tag,
                 child: Layout(
-                    child: Container(
+                        child: Container(
                   constraints: BoxConstraints.expand(),
                   child: CachedNetworkImage(
                     fit: BoxFit.fitWidth,
                     filterQuality: FilterQuality.low,
                     imageUrl: pics[itemIndex],
                   ),
-                )).size(width: BaseWidget.WRAP, height: BaseWidget.WRAP).backgroundColor(Colors.black).click(() {
+                ))
+                    .size(width: BaseWidget.WRAP, height: BaseWidget.WRAP)
+                    .backgroundColor(Colors.black)
+                    .click(() {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => PicturePreview(tag: heroTag, selectIndex: itemIndex, pics: pics)));
+                      builder: (_) => PicturePreview(
+                          tag: heroTag, selectIndex: itemIndex, pics: pics)));
                 }),
               );
             });
@@ -93,11 +95,16 @@ class PicturePreview extends StatefulWidget {
   final Object tag;
   final selectIndex;
 
-  const PicturePreview({Key key, this.pics = const ["", "", "", "", "", "", ""], this.tag, this.selectIndex})
+  const PicturePreview(
+      {Key key,
+      this.pics = const ["", "", "", "", "", "", ""],
+      this.tag,
+      this.selectIndex})
       : super(key: key);
 
   @override
-  _PicturePreviewState createState() => _PicturePreviewState(pics, tag, selectIndex);
+  _PicturePreviewState createState() =>
+      _PicturePreviewState(pics, tag, selectIndex);
 }
 
 class _PicturePreviewState extends State<PicturePreview> {
@@ -117,13 +124,16 @@ class _PicturePreviewState extends State<PicturePreview> {
       },
       tag: "$tag-$selectIndex",
       child: Layout(
-          child: PageView(
+              child: PageView(
         controller: controller,
         onPageChanged: (index) {
           selectIndex = index;
         },
         children: picToPhotoView(),
-      )).backgroundColor(Colors.black).size(width: BaseWidget.MATCH, height: BaseWidget.MATCH).click(() {
+      ))
+          .backgroundColor(Colors.black)
+          .size(width: BaseWidget.MATCH, height: BaseWidget.MATCH)
+          .click(() {
         setState(() {
           Navigator.of(context).pop();
         });
@@ -160,4 +170,29 @@ class FadeRoute extends PageRouteBuilder {
             child: child,
           ),
         );
+}
+
+class PicWidget extends StatelessWidget {
+  final String source;
+  final String tag;
+
+  const PicWidget({Key key, this.source, this.tag}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Layout(
+            child: Center(
+      child: Hero(
+        tag: tag,
+        child: CachedNetworkImage(
+          imageUrl: source,
+        ),
+      ),
+    ))
+        .size(width: BaseWidget.MATCH, height: BaseWidget.MATCH)
+        .backgroundColor(Colors.black)
+        .click(() {
+      Navigator.of(context).pop();
+    });
+  }
 }
