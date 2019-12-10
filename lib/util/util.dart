@@ -13,14 +13,11 @@ import 'package:github/view/widget/BaseWidget.dart';
 
 class DP {
   static double get(int dp) {
-    if (dp == null) {
+    if (dp == null || dp == 0.0 || dp == BaseWidget.WRAP) {
       return 0.0;
     }
     if (dp == BaseWidget.MATCH) {
       return double.infinity;
-    }
-    if (dp == BaseWidget.WRAP) {
-      return null;
     }
     return ScreenUtil.getInstance().setWidth(dp.toDouble());
   }

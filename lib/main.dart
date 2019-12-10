@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:github/ViewRoute.dart';
 import 'package:github/route/LoginRoute.dart';
 import 'package:github/route/MainRoute.dart';
 import 'package:github/route/SplashRoute.dart';
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       routes: {
         "/": (BuildContext context) => SplashRoute(),
         "/login": (BuildContext context) => LoginRoute(),
-        "/main": (BuildContext context) => MainRoute(),
+        "/main": (BuildContext context) => ViewRoute(),
       },
     );
   }
