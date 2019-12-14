@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:github/view/widget/BaseWidget.dart';
+import 'package:github/view/widget/View.dart';
 
 class DialogManager {
   static DialogManager _instance;
@@ -20,7 +21,7 @@ class DialogManager {
         builder: (_) => WillPopScope(
             onWillPop: () => Future.value(false),
             child: Center(
-              child: Layout(
+              child: View(
                   child: CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation(Colors.white),
               )).size(width: 200, height: 200).backgroundColor(Colors.black38).corner(both: 5),

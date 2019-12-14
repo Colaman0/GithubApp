@@ -2,11 +2,8 @@ import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:github/util/util.dart';
-import 'package:github/view/widget/PicturePreview.dart';
 
-import 'BaseWidget.dart';
+import 'View.dart';
 
 class PreviewPhotosView extends StatefulWidget {
   final List<String> pics;
@@ -30,7 +27,6 @@ class _PreviewPhotosViewState extends State<PreviewPhotosView> {
     switch (pics.length) {
       case 1:
         var tag = "$heroTag-0";
-
         return Hero(
             tag: tag,
             child: LayoutBuilder(builder: (context, box) {
@@ -61,7 +57,7 @@ class _PreviewPhotosViewState extends State<PreviewPhotosView> {
               String tag = "$heroTag-$itemIndex";
               return Hero(
                 tag: tag,
-                child: Layout(
+                child: View(
                         child: Container(
                   constraints: BoxConstraints.expand(),
                   child: CachedNetworkImage(
@@ -70,11 +66,11 @@ class _PreviewPhotosViewState extends State<PreviewPhotosView> {
                     imageUrl: pics[itemIndex],
                   ),
                 ))
-                    .size(width: BaseWidget.WRAP, height: BaseWidget.WRAP)
+                    .size(width: View.WRAP, height: View.WRAP)
                     .backgroundColor(Colors.black)
                     .click(() {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => PicturePreview(
+                  Navigator.of(context).push(FadeRoute(
+                      page: PicturePreview(
                           tag: heroTag, selectIndex: itemIndex, pics: pics)));
                 }),
               );
@@ -88,6 +84,35 @@ class _PreviewPhotosViewState extends State<PreviewPhotosView> {
         filterQuality: FilterQuality.low,
         imageUrl: pic,
       );
+}
+
+class PreviewRoute extends PopupRoute {
+  final Widget child;
+
+  PreviewRoute(this.child);
+
+  @override
+  // TODO: implement barrierColor
+  Color get barrierColor => Colors.black45;
+
+  @override
+  // TODO: implement barrierDismissible
+  bool get barrierDismissible => true;
+
+  @override
+  // TODO: implement barrierLabel
+  String get barrierLabel => "";
+
+  @override
+  Widget buildPage(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation) {
+    // TODO: implement buildPage
+    return child;
+  }
+
+  @override
+  // TODO: implement transitionDuration
+  Duration get transitionDuration => Duration(microseconds: 300);
 }
 
 class PicturePreview extends StatefulWidget {
@@ -123,7 +148,7 @@ class _PicturePreviewState extends State<PicturePreview> {
         return MaterialRectArcTween(begin: begin, end: end);
       },
       tag: "$tag-$selectIndex",
-      child: Layout(
+      child: View(
               child: PageView(
         controller: controller,
         onPageChanged: (index) {
@@ -132,7 +157,8 @@ class _PicturePreviewState extends State<PicturePreview> {
         children: picToPhotoView(),
       ))
           .backgroundColor(Colors.black)
-          .size(width: BaseWidget.MATCH, height: BaseWidget.MATCH)
+          .size(width: View.MATCH, height: View.MATCH)
+          .touchAnimation(false)
           .click(() {
         setState(() {
           Navigator.of(context).pop();
@@ -180,18 +206,15 @@ class PicWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Layout(
-            child: Center(
+    return View(
+        child: Center(
       child: Hero(
         tag: tag,
         child: CachedNetworkImage(
           imageUrl: source,
         ),
       ),
-    ))
-        .size(width: BaseWidget.MATCH, height: BaseWidget.MATCH)
-        .backgroundColor(Colors.black)
-        .click(() {
+    )).touchAnimation(false).backgroundColor(Colors.black).click(() {
       Navigator.of(context).pop();
     });
   }

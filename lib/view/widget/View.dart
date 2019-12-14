@@ -7,18 +7,32 @@ class View extends StatelessWidget {
   EdgeInsets _defalut = CustomMP().getParams();
   CustomMP _padding, _margin;
   Color _color, _storkeColor;
-  double _width, _storkeWidth;
-  double _height;
+  int _width = View.WRAP;
+  int _height = View.WRAP;
+  double _storkeWidth;
   BoxDecoration _boxDecoration;
   int _bothRadius, _leftTop, _leftBottom, _rightTop, _rightBottom;
   bool _circleShpae = false;
   Function _onTap, onDoubleTap;
+  bool _touchAnimation = true;
   Widget child;
 
   View({Key key, this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    child = child ?? Container();
+    if (_touchAnimation == false) {
+      return GestureDetector(
+        child: Container(
+          decoration: getBoxDecoration(),
+          margin: _margin?.getParams() ?? _defalut,
+          child: child,
+        ),
+        onTap: _onTap,
+        onDoubleTap: onDoubleTap,
+      );
+    }
     return getInkWellBackgroud(getSizeWidget(child));
   }
 
@@ -60,7 +74,7 @@ class View extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[child],
+          children: <Widget>[expandCheck(child)],
         ),
         padding: _padding?.getParams() ?? _defalut,
       );
@@ -69,7 +83,7 @@ class View extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[child],
+          children: <Widget>[expandCheck(child)],
         ),
         padding: _padding?.getParams() ?? _defalut,
       );
@@ -86,10 +100,7 @@ class View extends StatelessWidget {
         width: DP.get(_width.toInt()),
         height: DP.get(_height.toInt()),
         alignment: Alignment.center,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[child],
-        ),
+        child: child,
         padding: _padding?.getParams() ?? _defalut,
       );
     } else {
@@ -99,10 +110,11 @@ class View extends StatelessWidget {
           child: Padding(
               padding: _padding?.getParams() ?? _defalut,
               child: Column(
-                mainAxisSize: _height == View.WRAP ? MainAxisSize.min : MainAxisSize.max,
+                mainAxisSize:
+                    _height == View.WRAP ? MainAxisSize.min : MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[child],
+                children: <Widget>[expandCheck(child)],
               )),
         );
       } else if (isDpValue(_height)) {
@@ -113,8 +125,9 @@ class View extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: _width == View.WRAP ? MainAxisSize.min : MainAxisSize.max,
-              children: <Widget>[child],
+              mainAxisSize:
+                  _width == View.WRAP ? MainAxisSize.min : MainAxisSize.max,
+              children: <Widget>[expandCheck(child)],
             ),
           ),
         );
@@ -123,15 +136,20 @@ class View extends StatelessWidget {
     return sizeWrapper;
   }
 
-  bool isDpValue(double value) => value >= 0;
+  Widget expandCheck(Widget child) =>
+      (child is Column || child is Row) ? Expanded(child: child) : child;
+
+  bool isDpValue(int value) => value >= 0;
 
   View padding({int both, int left, int right, int top, int bottom}) {
-    _padding = CustomMP(both: both, left: left, right: right, top: top, bottom: bottom);
+    _padding = CustomMP(
+        both: both, left: left, right: right, top: top, bottom: bottom);
     return this;
   }
 
   View margin({int both, int left, int right, int top, int bottom}) {
-    _margin = CustomMP(both: both, left: left, right: right, top: top, bottom: bottom);
+    _margin = CustomMP(
+        both: both, left: left, right: right, top: top, bottom: bottom);
     return this;
   }
 
@@ -145,13 +163,19 @@ class View extends StatelessWidget {
     return this;
   }
 
-  View size({int width = View.WRAP, int height = View.WRAP}) {
-    _width = width.toDouble();
-    _height = height.toDouble();
+  View touchAnimation(bool anim) {
+    _touchAnimation = anim;
     return this;
   }
 
-  View corner({int both, int leftTop, int leftBottom, int rightTop, int rightBottom}) {
+  View size({int width = View.WRAP, int height = View.WRAP}) {
+    _width = width;
+    _height = height;
+    return this;
+  }
+
+  View corner(
+      {int both, int leftTop, int leftBottom, int rightTop, int rightBottom}) {
     _bothRadius = both;
     _leftTop = leftTop;
     _leftBottom = leftBottom;
@@ -174,7 +198,7 @@ class View extends StatelessWidget {
   BoxDecoration getBoxDecoration() {
     if (_boxDecoration == null) {
       _boxDecoration = BoxDecoration(
-          color: _color ?? Colors.white,
+          color: _color ?? Colors.transparent,
           borderRadius: getRadius(),
           shape: _circleShpae ? BoxShape.circle : BoxShape.rectangle,
           border: (_storkeWidth == 0 || _storkeColor == null)
@@ -190,10 +214,14 @@ class View extends StatelessWidget {
     }
     var bothRadius = DP.get(_bothRadius);
     return BorderRadius.only(
-      topLeft: Radius.circular(_leftTop == null ? bothRadius : DP.get(_leftTop)),
-      topRight: Radius.circular(_rightTop == null ? bothRadius : DP.get(_rightTop)),
-      bottomLeft: Radius.circular(_leftBottom == null ? bothRadius : DP.get(_leftBottom)),
-      bottomRight: Radius.circular(_rightBottom == null ? bothRadius : DP.get(_rightBottom)),
+      topLeft:
+          Radius.circular(_leftTop == null ? bothRadius : DP.get(_leftTop)),
+      topRight:
+          Radius.circular(_rightTop == null ? bothRadius : DP.get(_rightTop)),
+      bottomLeft: Radius.circular(
+          _leftBottom == null ? bothRadius : DP.get(_leftBottom)),
+      bottomRight: Radius.circular(
+          _rightBottom == null ? bothRadius : DP.get(_rightBottom)),
     );
   }
 

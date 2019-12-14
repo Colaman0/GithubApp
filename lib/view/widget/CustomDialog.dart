@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:github/util/util.dart';
 import 'package:github/view/widget/BaseWidget.dart';
 
+import 'View.dart';
+
 class CustomDialog extends StatefulWidget {
   final Widget childWidget;
 
@@ -21,12 +23,12 @@ class _CustomDialogState extends State<CustomDialog> {
     Duration insetAnimationDuration = const Duration(milliseconds: 100);
     Curve insetAnimationCurve = Curves.decelerate;
 
-    RoundedRectangleBorder _defaultDialogShape =
-        RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2.0)));
+    RoundedRectangleBorder _defaultDialogShape = RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(2.0)));
 
     return AnimatedPadding(
-      padding:
-          MediaQuery.of(context).viewInsets + const EdgeInsets.symmetric(horizontal: 40.0, vertical: 24.0),
+      padding: MediaQuery.of(context).viewInsets +
+          const EdgeInsets.symmetric(horizontal: 40.0, vertical: 24.0),
       duration: insetAnimationDuration,
       curve: insetAnimationCurve,
       child: MediaQuery.removeViewInsets(
@@ -35,7 +37,7 @@ class _CustomDialogState extends State<CustomDialog> {
         removeRight: true,
         removeBottom: true,
         context: context,
-        child: Layout(
+        child: View(
           child: Center(
             child: Material(
               color: Colors.black,
@@ -44,7 +46,7 @@ class _CustomDialogState extends State<CustomDialog> {
               child: childWidget,
             ),
           ),
-        ).size(width: BaseWidget.MATCH,height: BaseWidget.MATCH),
+        ).size(width: View.MATCH, height: View.MATCH),
       ),
     );
   }

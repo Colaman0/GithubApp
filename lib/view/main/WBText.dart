@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:github/util/util.dart';
 import 'package:github/view/widget/BaseWidget.dart';
+import 'package:github/view/widget/View.dart';
 import 'package:rxdart/rxdart.dart';
 
 class WBText extends StatefulWidget {
@@ -36,7 +37,7 @@ class _WBTextState extends State<WBText> {
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(color: Colors.black, fontSize: SP.get(20))),
-                  Layout(
+                  View(
                     child: Icon(expand ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down),
                   ).size(width: 48, height: 48).click(() {
                     setState(() {

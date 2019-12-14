@@ -4,6 +4,7 @@ import 'package:github/view/bind/BindViewPager.dart';
 import 'package:github/view/main/MainContentsWidget.dart';
 import 'package:github/view/widget/BaseWidget.dart';
 import 'package:github/view/widget/TextView.dart';
+import 'package:github/view/widget/View.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MainRoute extends StatefulWidget {
@@ -24,11 +25,13 @@ class _MainRouteState extends State<MainRoute> {
           physics: ScrollPhysics(),
           controller: _controller,
           scrollDirection: Axis.horizontal,
-          onPageChanged: (page)=>_pageStream.add(page),
+          onPageChanged: (page) => _pageStream.add(page),
           children: <Widget>[
             MainContentsWidget(),
-            Layout().size(width: 200, height: 200).backgroundColor(Colors.cyan),
-            Layout().size(width: 200, height: 200).backgroundColor(Colors.black26),
+            View().size(width: 200, height: 200).backgroundColor(Colors.cyan),
+            View()
+                .size(width: 200, height: 200)
+                .backgroundColor(Colors.black26),
           ],
         ),
         stream: _pageStream,

@@ -3,6 +3,7 @@ import 'package:github/view/main/WBText.dart';
 import 'package:github/view/widget/BaseWidget.dart';
 import 'package:github/view/widget/PreviewPhotoView.dart';
 import 'package:github/view/widget/RefreshLoadMoreListView.dart';
+import 'package:github/view/widget/View.dart';
 
 import 'WBTitleWidget.dart';
 
@@ -48,7 +49,7 @@ class WBDataFactory extends RLDataFactory {
 
   @override
   Widget createItemWidget(BuildContext context, int index, data) {
-    return Layout(
+    return View(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -56,20 +57,18 @@ class WBDataFactory extends RLDataFactory {
               avatar: "https://wx3.sinaimg.cn/mw690/4c033d1egy1g9lzuvqnzsj22c02c0u0z.jpg",
               name: "张三",
               secondTitle: "time")),
-          Layout(
+          View(
             child: WBText(content: TEST_CONTENT),
           ).margin(top: 16, bottom: 16),
           PreviewPhotosView(
             pics: const [
-              "https://wx3.sinaimg.cn/mw690/98f0f55fly1g9o3xdj8kxj20u011e7bi.jpg",
-              "https://wx3.sinaimg.cn/mw690/98f0f55fly1g9o3xdj8kxj20u011e7bi.jpg",
               "https://wx3.sinaimg.cn/mw690/98f0f55fly1g9o3xdj8kxj20u011e7bi.jpg",
             ],
             heroTag: index.toString(),
           ),
         ],
       ),
-    ).padding(both: 24);
+    ).size(width: View.MATCH, height: View.WRAP).padding(both: 24);
   }
 }
 

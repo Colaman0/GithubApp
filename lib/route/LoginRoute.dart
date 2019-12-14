@@ -5,6 +5,7 @@ import 'package:github/bloc/LoginBloc.dart';
 import 'package:github/util/DialogManager.dart';
 import 'package:github/view/widget/BaseWidget.dart';
 import 'package:github/view/widget/TextView.dart';
+import 'package:github/view/widget/View.dart';
 
 class LoginRoute extends StatelessWidget {
   @override
@@ -12,7 +13,7 @@ class LoginRoute extends StatelessWidget {
     LoginBloc bloc = LoginBloc();
     return BlocProvider(
       bloc: bloc,
-      child: Layout(
+      child: View(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -61,7 +62,7 @@ class LoginRoute extends StatelessWidget {
       controller.animateToPage(type == LoginBloc.LOING_PSW ? 0 : 1, duration: Duration(milliseconds: 100), curve: Curves.bounceIn);
     });
 
-    return Layout(
+    return View(
         child: PageView(
       children: <Widget>[pswContent, tokenContent],
       controller: controller,
@@ -88,13 +89,13 @@ class _LoginTokenWidgetState extends State<LoginTokenWidget> with AutomaticKeepA
   @override
   Widget build(BuildContext context) {
     LoginBloc bloc = BlocProvider.of(context);
-    return Layout(
+    return View(
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           Expanded(
             flex: 1,
-            child: Layout(
+            child: View(
               child: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
                 TextView(
                   "Token",
@@ -103,7 +104,7 @@ class _LoginTokenWidgetState extends State<LoginTokenWidget> with AutomaticKeepA
                 ).margin(right: 12),
                 Expanded(
                   flex: 1,
-                  child: Layout(
+                  child: View(
                     child: TextField(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
@@ -174,11 +175,11 @@ class _LoginPswWidgetState extends State<LoginPswWidget> with AutomaticKeepAlive
   @override
   Widget build(BuildContext context) {
     LoginBloc bloc = BlocProvider.of(context);
-    return Layout(
+    return View(
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          Layout(
+          View(
             child: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
               TextView(
                 "账号",
@@ -187,7 +188,7 @@ class _LoginPswWidgetState extends State<LoginPswWidget> with AutomaticKeepAlive
               ).margin(right: 12),
               Expanded(
                 flex: 1,
-                child: Layout(
+                child: View(
                   child: TextField(
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
@@ -201,7 +202,7 @@ class _LoginPswWidgetState extends State<LoginPswWidget> with AutomaticKeepAlive
               )
             ]),
           ).size(height: 100),
-          Layout(
+          View(
             child: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
               TextView(
                 "密码",
@@ -210,7 +211,7 @@ class _LoginPswWidgetState extends State<LoginPswWidget> with AutomaticKeepAlive
               ).margin(right: 12),
               Expanded(
                 flex: 1,
-                child: Layout(
+                child: View(
                   child: TextField(
                     style: TextStyle(color: Colors.black),
                     cursorColor: Colors.blue,

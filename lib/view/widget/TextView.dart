@@ -2,6 +2,7 @@ import 'package:github/util/util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:github/view/widget/View.dart';
 
 import 'BaseWidget.dart';
 
@@ -11,7 +12,7 @@ import 'BaseWidget.dart';
 /// * Function  :
 ///
 
-class TextView extends BaseWidget {
+class TextView extends View {
   final String content;
   final int textSize;
   final String textColorStr;

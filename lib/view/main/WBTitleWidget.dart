@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:github/view/widget/BaseWidget.dart';
 import 'package:github/view/widget/TextView.dart';
+import 'package:github/view/widget/View.dart';
 
 class WBTitle extends StatefulWidget {
   final WBTitleOption option;
@@ -18,24 +19,25 @@ class _WBTitleState extends State<WBTitle> {
 
   @override
   Widget build(BuildContext context) {
-    return Layout(
-      child: Row(
-        children: <Widget>[
-          Layout(
-            child: ClipOval(
-                child: Image.network(
-              option.avatar,
-              fit: BoxFit.cover,
-            )),
-          ).size(width: 72, height: 72),
-          Layout(
-            child: Column(
-              children: <Widget>[TextView(option.name, textSize: 22, textColor: Colors.black), TextView(option.secondTitle, textColor: Colors.grey)],
-            ),
-          ).margin(left: 16),
-          Spacer(),
-        ],
-      ),
+    return Row(
+      children: <Widget>[
+        View(
+          child: ClipOval(
+              child: Image.network(
+            option.avatar,
+            fit: BoxFit.cover,
+          )),
+        ).size(width: 72, height: 72),
+        View(
+          child: Column(
+            children: <Widget>[
+              TextView(option.name, textSize: 22, textColor: Colors.black),
+              TextView(option.secondTitle, textColor: Colors.grey)
+            ],
+          ),
+        ).margin(left: 16),
+        Spacer(),
+      ],
     );
   }
 }
