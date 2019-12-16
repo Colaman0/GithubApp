@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:github/util/util.dart';
 
@@ -56,17 +57,15 @@ class View extends StatelessWidget {
   Widget getSizeWidget(Widget child) {
     Widget _body;
     if (_width == View.WRAP && _height == View.WRAP) {
-      _body = Container(
+      _body = Padding(
         child: child,
         padding: _padding?.getParams() ?? _defalut,
       );
     } else if (_width == View.MATCH && _height == View.MATCH) {
       _body = Container(
-        alignment: Alignment.center,
-        child: child,
-        width: double.infinity,
-        height: double.infinity,
         padding: _padding?.getParams() ?? _defalut,
+        child: child,
+        constraints: BoxConstraints.expand(),
       );
     } else if (_width == View.WRAP && _height == View.MATCH) {
       _body = Padding(
@@ -134,6 +133,52 @@ class View extends StatelessWidget {
       }
     }
     return sizeWrapper;
+  }
+
+  Widget buildChild() {
+    Widget body;
+    if (_touchAnimation) {
+      if (_width == View.MATCH && _height == View.MATCH) {
+        body = Container(
+          padding: _padding?.getParams() ?? _defalut,
+          margin: _margin?.getParams() ?? _defalut,
+          alignment: Alignment.center,
+          decoration: getBoxDecoration(),
+          constraints: BoxConstraints.expand(),
+          child: child,
+        );
+      } else if (_width == View.WRAP && _height == View.WRAP) {
+        body = Container(
+          padding: _padding?.getParams() ?? _defalut,
+          margin: _margin?.getParams() ?? _defalut,
+          alignment: Alignment.center,
+          decoration: getBoxDecoration(),
+          child: child,
+        );
+      } else if (_width == View.MATCH && _height == View.WRAP) {
+        body = Container(
+          padding: _padding?.getParams() ?? _defalut,
+          margin: _margin?.getParams() ?? _defalut,
+          width: double.infinity,
+          alignment: Alignment.center,
+          constraints: BoxConstraints.tightForFinite(),
+          decoration: getBoxDecoration(),
+          child: child,
+        );
+      } else if (_width == View.WRAP && _height == View.MATCH) {
+        body = Container(
+          padding: _padding?.getParams() ?? _defalut,
+          margin: _margin?.getParams() ?? _defalut,
+          height: double.infinity,
+          alignment: Alignment.center,
+          constraints: BoxConstraints.tightForFinite(),
+          decoration: getBoxDecoration(),
+          child: child,
+        );
+      }
+    } else {}
+
+    return body;
   }
 
   Widget expandCheck(Widget child) =>

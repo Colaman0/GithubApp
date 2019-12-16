@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:github/view/main/MainContentsWidget.dart';
 import 'package:github/view/widget/TextView.dart';
 
 import 'BaseWidget.dart';
@@ -43,19 +44,16 @@ class _RefreshLoadmoreListViewState extends State<RefreshLoadmoreListView>
   _RefreshLoadmoreListViewState(this._dataFactory, this._option);
 
   Future<PageDTO<dynamic>> _refrshFuture;
-  AnimationController _controller;
-  Animation _animation;
-
   Widget child;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this);
-    _animation = Tween(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(_controller);
+//    _controller = AnimationController(vsync: this);
+//    _animation = Tween(
+//      begin: 0.0,
+//      end: 1.0,
+//    ).animate(_controller);
     child = getAnimBase();
     _refrshFuture = _dataFactory.createFuture(_pageHelper.currentPage);
     _scrollController.addListener(() {
@@ -74,81 +72,53 @@ class _RefreshLoadmoreListViewState extends State<RefreshLoadmoreListView>
   @override
   Widget build(BuildContext context) {
     super.build(context); //必须添加
-    return AnimatedContainer(
-      duration: Duration(seconds: 1),
-      curve: Curves.bounceIn,
-      child: FutureBuilder<PageDTO>(
-          future: _refrshFuture,
-          builder: (context, snapshot) {
-            print(snapshot.toString());
-            switch (snapshot.connectionState) {
-              case ConnectionState.none:
-              case ConnectionState.active:
-              case ConnectionState.waiting:
-              case ConnectionState.done:
-                if (snapshot.hasError) {
-                  return Center(
-                    child: TextView('网络请求出错,点击重试').click(() => refresh()),
-                  );
-                } else {
-                  return child;
-                }
-            }
-            loadmoreIng = false;
-
+    return FutureBuilder<PageDTO>(
+        future: _refrshFuture,
+        builder: (context, snapshot) {
+          print(snapshot.toString());
+//          switch (snapshot.connectionState) {
+//            case ConnectionState.none:
+//            case ConnectionState.active:
+//            case ConnectionState.waiting:
+//            case ConnectionState.done:
+//              if (snapshot.hasError) {
+//                return Center(
+//                  child: TextView('网络请求出错,点击重试').click(() => refresh()),
+//                );
+//              } else {
+//                return child;
+//              }
+//          }
+          loadmoreIng = false;
+          if (snapshot.connectionState == ConnectionState.done &&
+              !snapshot.hasError) {
             /// future返回数据之后注入到pageHelper里进行处理
             _pageHelper.injectData(snapshot.data);
-            return getAnimBase();
-          }),
-    );
+          }
+          return AnimatedCrossFade(
+            duration: Duration(seconds: 1),
+            // ignore: unrelated_type_equality_checks
+            crossFadeState: snapshot.connectionState == ConnectionState.done
+                ? CrossFadeState.showSecond
+                : CrossFadeState.showFirst,
+            firstChild: Center(
+              child: CircularProgressIndicator(),
+            ),
+            secondChild: child,
+          );
+        });
   }
 
   Widget getAnimBase() {
-    _controller.forward();
-    return AnimatedBuilder(
-      animation: _controller,
-      child: Center(child: CircularProgressIndicator()),
-      builder: (BuildContext context, Widget child) {
-        return FadeTransition(
-          child: RefreshIndicator(
-            child: ListView.separated(
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              controller: _scrollController,
-              itemCount: _pageHelper.datas.length +
-                  ((_option.canLoadMore && !_pageHelper.isLastPage) ? 1 : 0),
-              itemBuilder: (context, index) {
-                if (_option.canLoadMore) {
-                  if (!_pageHelper.isLastPage &&
-                      index == _pageHelper.datas.length) {
-                    return _option.loadMoreItem ??
-                        Center(
-                          child: View(
-                                  child: CircularProgressIndicator(
-                            strokeWidth: 3.0,
-                          ))
-                              .backgroundColor(Colors.white)
-                              .size(width: 30, height: 30)
-                              .margin(top: 8, bottom: 8),
-                        );
-                  } else {
-                    return _dataFactory.createItemWidget(
-                        context, index, _pageHelper.datas[index]);
-                  }
-                }
-                return _dataFactory.createItemWidget(
-                    context, index, _pageHelper.datas[index]);
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return View().size(height: 24).backgroundColor(Colors.white12);
-              },
-            ),
-            onRefresh: () => refresh(),
-          ),
-          opacity: _animation,
-        );
-      },
-    );
+    return View(
+      child: TextView("12"),
+    )
+        .touchAnimation(false)
+        .backgroundColor(Colors.black)
+        .size(width: View.MATCH, height: View.MATCH)
+        .click(() {
+      refresh();
+    });
   }
 
   void loadmore() async {
@@ -168,7 +138,9 @@ class _RefreshLoadmoreListViewState extends State<RefreshLoadmoreListView>
     _pageHelper.reset();
     var datas = await _dataFactory.createFuture(_pageHelper.currentPage);
     setState(() {
-      _refrshFuture = Future.value(datas);
+      _refrshFuture = Future.delayed(Duration(seconds: 2), () {
+        return Future.value(datas);
+      });
     });
   }
 
@@ -181,7 +153,7 @@ class PageDataHelper {
 
   int currentPage = 1;
 
-  bool isLastPage;
+  bool isLastPage = true;
 
   void reset() {
     datas.clear();
