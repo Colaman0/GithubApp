@@ -3,7 +3,7 @@ import 'package:github/view/main/WBText.dart';
 import 'package:github/view/widget/BaseWidget.dart';
 import 'package:github/view/widget/PreviewPhotoView.dart';
 import 'package:github/view/widget/RefreshLoadMoreListView.dart';
-import 'package:github/view/widget/View.dart';
+import 'package:github/view/widget/view/View.dart';
 
 import 'WBTitleWidget.dart';
 

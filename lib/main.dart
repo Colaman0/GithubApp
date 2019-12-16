@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       routes: {
         "/": (BuildContext context) => SplashRoute(),
         "/login": (BuildContext context) => LoginRoute(),
-        "/main": (BuildContext context) => MainRoute(),
+        "/main": (BuildContext context) => ViewRoute(),
       },
     );
   }

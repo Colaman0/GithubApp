@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:github/view/widget/BaseWidget.dart';
-import 'package:github/view/widget/View.dart';
+import 'package:github/view/widget/view/View.dart';
 
 ///
 /// * Author    : kyle

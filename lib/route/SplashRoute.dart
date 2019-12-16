@@ -3,7 +3,7 @@ import 'package:github/entity/UserInfo.dart';
 import 'package:github/util/AppManager.dart';
 import 'package:github/util/NaigatorUtils.dart';
 import 'package:github/util/UserManager.dart';
-import 'package:github/view/widget/TextView.dart';
+import 'package:github/view/widget/view/TextView.dart';
 
 class SplashRoute extends StatelessWidget {
   @override

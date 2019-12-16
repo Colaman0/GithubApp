@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:github/view/main/MainContentsWidget.dart';
-import 'package:github/view/widget/TextView.dart';
+import 'package:github/view/widget/view/TextView.dart';
+import 'package:github/view/widget/view/View.dart';
 
 import 'BaseWidget.dart';
-import 'View.dart';
 
 class RefreshLoadmoreListView extends StatefulWidget {
   final RLDataFactory _dataFactory;

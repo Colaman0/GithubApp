@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:github/util/util.dart';
 import 'package:github/view/widget/BaseWidget.dart';
-import 'package:github/view/widget/View.dart';
+import 'package:github/view/widget/view/View.dart';
 import 'package:rxdart/rxdart.dart';
 
 class WBText extends StatefulWidget {

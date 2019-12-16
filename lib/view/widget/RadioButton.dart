@@ -1,9 +1,9 @@
 import 'package:github/util/util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:github/view/widget/view/View.dart';
 
 import 'BaseWidget.dart';
-import 'View.dart';
 
 ///
 /// * Author    : kyle

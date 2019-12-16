@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:github/base/bloc.dart';
 import 'package:github/bloc/LoginBloc.dart';
 import 'package:github/util/DialogManager.dart';
-import 'package:github/view/widget/BaseWidget.dart';
-import 'package:github/view/widget/TextView.dart';
-import 'package:github/view/widget/View.dart';
+import 'package:github/view/widget/view/TextView.dart';
+import 'package:github/view/widget/view/View.dart';
 
 class LoginRoute extends StatelessWidget {
   @override

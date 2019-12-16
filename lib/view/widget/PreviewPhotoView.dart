@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:github/view/widget/view/View.dart';
 
-import 'View.dart';
 
 class PreviewPhotosView extends StatefulWidget {
   final List<String> pics;
