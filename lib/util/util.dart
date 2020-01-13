@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:github/view/widget/BaseWidget.dart';
+import 'package:github/view/widget/view/View.dart';
 
 ///
 /// * Author    : kyle
@@ -13,14 +14,11 @@ import 'package:github/view/widget/BaseWidget.dart';
 
 class DP {
   static double get(int dp) {
-    if (dp == null) {
+    if (dp == null || dp == 0.0 || dp == View.WRAP) {
       return 0.0;
     }
-    if (dp == BaseWidget.MATCH) {
+    if (dp == View.MATCH) {
       return double.infinity;
-    }
-    if (dp == BaseWidget.WRAP) {
-      return null;
     }
     return ScreenUtil.getInstance().setWidth(dp.toDouble());
   }

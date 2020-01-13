@@ -3,7 +3,7 @@ import 'package:github/entity/UserInfo.dart';
 import 'package:github/util/AppManager.dart';
 import 'package:github/util/NaigatorUtils.dart';
 import 'package:github/util/UserManager.dart';
-import 'package:github/view/widget/TextView.dart';
+import 'package:github/view/widget/view/TextView.dart';
 
 class SplashRoute extends StatelessWidget {
   @override
@@ -25,7 +25,7 @@ class SplashRoute extends StatelessWidget {
   void checkLoginStatus(BuildContext context) async {
     LoginInfo info = await UserManager.getInstance().getLocalUserInfo();
     if (info == null) {
-      NavigatorUtils.getInstance().toLogin(context);
+      NavigatorUtils.getInstance().toMain(context);
     } else {
       NavigatorUtils.getInstance().toMain(context);
     }

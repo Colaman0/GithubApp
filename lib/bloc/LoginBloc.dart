@@ -5,15 +5,16 @@ class LoginBloc extends BlocBase {
   static final int LOING_PSW = 1;
   static final int LOING_TOKEN = 2;
 
-  PublishSubject<int> loginTypeStream = BehaviorSubject<int>().share();
-  PublishSubject<bool> autoLoginStream = BehaviorSubject<bool>().share();
-  PublishSubject<bool> loginInfoAvail = BehaviorSubject<bool>().share();
+  PublishSubject<int> loginTypeStream = PublishSubject<int>().share();
+  PublishSubject<bool> autoLoginStream = PublishSubject<bool>().share();
+  PublishSubject<bool> loginInfoAvail = PublishSubject<bool>().share();
+  PublishSubject<bool> loginTokenInfoAvail = PublishSubject<bool>().share();
 
   String _userName = "";
   String _userPsw = "";
   String _userToken = "";
   bool _preLoginInfoAvail = false;
-  bool _autoLogin = false;
+  bool autoLogin = false;
 
   LoginBloc() {
 
@@ -44,14 +45,15 @@ class LoginBloc extends BlocBase {
 
   void updateUserToken(String str) {
     _userToken = str;
+    loginTokenInfoAvail.add(_userToken.isNotEmpty);
   }
 
   void updateAutoLogin(bool autoLogin) {
-    _autoLogin = !_autoLogin;
+    this.autoLogin = ! this.autoLogin;
     autoLoginStream.add(autoLogin);
   }
 
-  bool autoLogin() => _autoLogin;
+  bool actionAutoLogin() => autoLogin;
 
   @override
   bool autoRelease() {

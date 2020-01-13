@@ -9,6 +9,7 @@ import 'package:github/view/widget/WebView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../ViewRoute.dart';
 import '../main.dart';
 
 ///
@@ -23,7 +24,7 @@ class NavigatorUtils {
   static Map<String, WidgetBuilder> routeMap = {
     "/": (BuildContext context) => SplashRoute(),
     "/login": (BuildContext context) => LoginRoute(),
-    "/main": (BuildContext context) => MainRoute(),
+    "/main": (BuildContext context) => ViewRoute(),
   };
 
   NavigatorUtils._();

@@ -1,6 +1,7 @@
 import 'package:github/util/util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:github/view/widget/view/View.dart';
 
 import 'BaseWidget.dart';
 
@@ -17,10 +18,10 @@ class RadioButtoin extends StatefulWidget {
   Color _selectColor;
   Color _unselectColor;
   IconData _selectIcon, _unselectIcon;
-  Layout _layout;
+  View _layout;
 
   RadioButtoin(
-      {Layout layout,
+      {View layout,
       Color selectColor,
       Color unselectColor,
       bool value,
@@ -54,7 +55,7 @@ class _TouchRadioState extends State<RadioButtoin> {
     Color color = widget._value ? widget._selectColor ?? Colors.blueAccent : widget._unselectColor ?? Colors.grey;
     return AnimatedSwitcher(
         duration: Duration(milliseconds: 300),
-        child: Layout(
+        child: View(
           child: IconButton(
             padding: EdgeInsets.all(0),
             icon: Icon(

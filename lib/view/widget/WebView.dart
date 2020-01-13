@@ -11,7 +11,7 @@ import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rxdart/rxdart.dart';
 
-import 'TextView.dart';
+import 'view/TextView.dart';
 
 ///
 /// * author : kyle
@@ -43,7 +43,6 @@ class _CustomWebViewState extends State<CustomWebView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     webView = getWeb();
     flutterWebviewPlugin.onScrollYChanged.listen((data) {
